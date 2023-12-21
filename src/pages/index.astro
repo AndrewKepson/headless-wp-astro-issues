@@ -1,0 +1,35 @@
+---
+export const prerender = true
+import { fetchWordPressRegions } from '../lib/wordPressApi';
+
+import Layout from '../layouts/Layout.astro';
+
+const regions = await fetchWordPressRegions();
+console.log(regions)
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<section id="regions">
+			{regions.map(region => (
+				<div>
+					<a href={`/region/${region.node.slug}`}>
+					<h2>{region.node.title}</h2>
+					</a>
+				</div>
+			))}
+		</section>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+</style>

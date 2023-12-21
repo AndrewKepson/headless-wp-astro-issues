@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+const { slug } = Astro.params;
+
+import { fetchCitiesByRegion } from "../../lib/wordPressApi";
+import { getRegionFeaturedImage} from '../../lib/functions'
+
+const cities = await fetchCitiesByRegion(slug);
+const regionImage =  getRegionFeaturedImage(slug);
+console.log(cities)
+---
+
+<section>
+    <h1>Title</h1>
+    <p>
+        Content lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    </p>
+    <Image id="region-image" src={regionImage} alt="Placeholder" />
+    <h2>Cities</h2>
+    <div id="region-cities">
+        <ul>
+            {cities?.map(city => (
+                <li>
+                    {city?.title}
+                </li>
+            ))}
+        </ul>
+    </div>
+</section>
